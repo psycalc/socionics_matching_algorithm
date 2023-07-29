@@ -1,5 +1,26 @@
 from socionics_relationships import RELATIONSHIP_NAMES, RELATIONSHIP_DESCRIPTIONS
 from socionics_types import TYPE_ABBREVIATIONS, TYPE_NAMES
+from socionics_model_a import generate_model_a_description
+
+# Information about Model A
+MODEL_A_INFO = """
+[... The complete information about Model A as you provided ...]
+"""
+
+# Dictionaries mapping functions and blocks for each type
+FUNCTIONS_BY_TYPE = {
+    "S": "Sensory",
+    "N": "Intuitive",
+    "E": "Ethical",
+    "T": "Logical",
+}
+
+BLOCKS_BY_TYPE = {
+    "E": "Ego",
+    "S": "Super-ego",
+    "I": "Super-id",
+    "T": "Id",
+}
 
 def get_relation_index(code1, code2):
     """Calculate the index of the relationship between two socionic types."""
@@ -25,6 +46,8 @@ def calculate_type_relationship(first_type, second_type, lang='en'):
           f"{second_type.upper()} ({type_name2}) - {relation_name} Relationship")
     print("Description:", relation_description)
 
+
+
 if __name__ == "__main__":
     lang = input("Choose a language (en/es/uk): ").lower()
     if lang not in RELATIONSHIP_NAMES:
@@ -33,11 +56,17 @@ if __name__ == "__main__":
 
     print(f"Welcome to the Socionics Intertype Relationship Calculator! (Language: {lang})")
     while True:
-        first_type = input("\nEnter the first type (e.g., 'SEI' or 'Mediator'): ").upper()
+        first_type = input("\nEnter the first type (e.g., 'SLE' or 'Mediator'): ").upper()
         if first_type in TYPE_ABBREVIATIONS:
-            second_type = input("Enter the second type (e.g., 'SEI' or 'Mediator'): ").upper()
+            second_type = input("Enter the second type (e.g., 'SLE' or 'Mediator'): ").upper()
             if second_type in TYPE_ABBREVIATIONS:
                 calculate_type_relationship(first_type, second_type, lang)
+
+                # After calculating the relationship, ask if the user wants to see the model
+                show_model_choice = input(f"Do you want to see Model A information for {first_type.upper()}? (yes/no): ").lower()
+                if show_model_choice == 'yes':
+                    model_a_description = generate_model_a_description(first_type, lang)
+                    print(model_a_description)
             else:
                 print("Invalid type abbreviation. Please enter a valid type abbreviation.")
         else:
